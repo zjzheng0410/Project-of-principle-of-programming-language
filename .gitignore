@@ -1,0 +1,11 @@
+# ignore agents&codex
+/.agents/
+/.codex/
+
+# ignore identifier files
+2026.docx:Zone.Identifier
+
+#ignore prompt
+
+#ignore tests
+/tests/
