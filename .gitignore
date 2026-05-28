@@ -7,5 +7,7 @@
 
 #ignore prompt
 
-#ignore tests
-/tests/
+# build products
+/build/
+/generated/*.bin
+/generated/test_*.c

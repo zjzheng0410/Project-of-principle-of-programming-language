@@ -1,0 +1,26 @@
+let x = Some(10)
+let y = None
+is_some(x) // => true
+is_none(y) // => true
+
+match x {
+    Some(v) => v + 1
+    None => 0
+} // => 11
+
+match Some(75) {
+    Some(v) if v >= 60 => 1
+    Some(v) => 0
+    None => -1
+} // => 1
+
+find(arr, target) {
+    for_each(item in arr) {
+        if (item > target) {
+            return Some(item)
+        }
+    }
+    None
+}
+find([1, 3, 5, 2, 4], 3) // => Some(5)
+find([1, 2, 3], 5) // => None

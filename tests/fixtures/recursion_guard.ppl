@@ -1,0 +1,25 @@
+let fact = fn(n) {
+    if (n <= 1) { 1 } else { n * fact(n - 1) }
+}
+fact(5) // => 120
+
+max_opt(arr) {
+    if (len(arr) == 0) {
+        return None
+    }
+    let best = arr[0]
+    for_each(x in arr) {
+        if (x > best) {
+            best = x
+        }
+    }
+    Some(best)
+}
+max_opt([3, 9, 2, 5]) // => Some(9)
+max_opt([]) // => None
+
+match Some(75) {
+    Some(x) if x >= 60 => 1
+    Some(x) => 0
+    None => -1
+} // => 1

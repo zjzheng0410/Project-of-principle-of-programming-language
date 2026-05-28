@@ -1,0 +1,123 @@
+// Option 赋值和判定
+let opt_value = Some(10)
+let empty_value = None
+is_some(opt_value) // => true
+is_none(empty_value) // => true
+
+// match 基本结构
+let matched = match opt_value {
+    Some(x) => x + 1
+    None => 0
+}
+matched // => 11
+
+// 返回 Option 的查找函数
+find(arr, target) {
+    for_each(x in arr) {
+        if (x > target) {
+            return Some(x)
+        }
+    }
+    None
+}
+find([1, 3, 5, 2, 4], 3) // => Some(5)
+find([1, 2, 3], 5) // => None
+
+// 函数赋值给变量和匿名函数块
+let double = fn(x) {
+    x * 2
+}
+double(10) // => 20
+
+// 函数返回函数，包括闭包捕获
+let add = fn(a) {
+    fn(b) {
+        a + b
+    }
+}
+add(3)(4) // => 7
+
+// Lambda 表达式和连续调用
+let double_lambda = fn x => x * 2
+double_lambda(10) // => 20
+let add_lambda = fn a => fn b => a + b
+add_lambda(3)(4) // => 7
+
+// Option 组合、默认值与短路传播
+map_opt(Some(10), fn x => x * 2) // => Some(20)
+unwrap_or(Some(8), 0) // => 8
+unwrap_or(None, 0) // => 0
+
+safe_div(a, b) {
+    if (b == 0) {
+        return None
+    }
+    Some(a / b)
+}
+and_then(safe_div(20, 2), fn x => safe_div(x, 5)) // => Some(2)
+and_then(safe_div(20, 0), fn x => safe_div(x, 5)) // => None
+
+// 数组字面量、空数组、索引、长度和高阶函数
+len([]) // => 0
+[9, 8, 7][1] // => 8
+map([1, 2, 3, 4], fn x => x * x) // => [1, 4, 9, 16]
+filter([1, 3, 5, 2, 4], fn x => x > 3) // => [5, 4]
+reduce([1, 2, 3, 4], 0, fn acc, x => acc + x) // => 10
+any([1, 2, 3], fn x => x == 2) // => true
+all([2, 4, 6], fn x => x % 2 == 0) // => true
+
+// 块级作用域、变量遮蔽和外层变量访问
+let scoped = 10
+{
+    let scoped = 20
+    scoped // => 20
+}
+scoped // => 10
+
+let base = 100
+let add_base = fn(x) {
+    base + x
+}
+add_base(23) // => 123
+
+// 闭包拥有独立可变状态
+let make_counter = fn(start) {
+    let n = start
+    fn() {
+        n = n + 1
+        n
+    }
+}
+let c1 = make_counter(0)
+c1() // => 1
+c1() // => 2
+let c2 = make_counter(10)
+c2() // => 11
+c1() // => 3
+
+// 递归、条件表达式和 match 守卫
+let fact = fn(n) {
+    if (n <= 1) { 1 } else { n * fact(n - 1) }
+}
+fact(5) // => 120
+
+match Some(75) {
+    Some(x) if x >= 60 => 1
+    Some(x) => 0
+    None => -1
+} // => 1
+
+max_opt(arr) {
+    if (len(arr) == 0) {
+        return None
+    }
+    let best = arr[0]
+    for_each(x in arr) {
+        if (x > best) {
+            best = x
+        }
+    }
+    Some(best)
+}
+max_opt([3, 9, 2, 5]) // => Some(9)
+max_opt([]) // => None

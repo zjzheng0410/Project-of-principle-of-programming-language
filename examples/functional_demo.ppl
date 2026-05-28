@@ -1,0 +1,26 @@
+// 函数值、Lambda、函数返回函数和闭包
+let double = fn(x) {
+    x * 2
+}
+double(10) // => 20
+
+let add = fn(a) {
+    fn(b) {
+        a + b
+    }
+}
+add(3)(4) // => 7
+
+let add_lambda = fn a => fn b => a + b
+add_lambda(5)(6) // => 11
+
+let make_counter = fn(start) {
+    let n = start
+    fn() {
+        n = n + 1
+        n
+    }
+}
+let c = make_counter(0)
+c() // => 1
+c() // => 2

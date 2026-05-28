@@ -1,0 +1,13 @@
+map_opt(Some(10), fn x => x * 2) // => Some(20)
+map_opt(None, fn x => x * 2) // => None
+unwrap_or(Some(8), 0) // => 8
+unwrap_or(None, 0) // => 0
+
+safe_div(a, b) {
+    if (b == 0) {
+        return None
+    }
+    Some(a / b)
+}
+and_then(safe_div(20, 2), fn x => safe_div(x, 5)) // => Some(2)
+and_then(safe_div(20, 0), fn x => safe_div(x, 5)) // => None

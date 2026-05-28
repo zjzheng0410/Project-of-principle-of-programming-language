@@ -7,8 +7,8 @@
 
 - If the goal is unclear, the requirement is ambiguous, or the input is insufficient, you must ask for confirmation first. Do not make assumptions on your own.
 - Do not modify any existing code unless explicitly requested.
-- Before starting analysis, design, or coding, you must first fully inspect the project code and directory structure to understand the current path, module relationships, and dependencies. The project directory is `/mnt/d/coding/job/kf/backup/rl_train_construction/RL`.
--  The project environment is Linux and python 3.8.
+- Before starting analysis, design, or coding, you must first fully inspect the project code and directory structure to understand the current path, module relationships, and dependencies.
+-  The project environment is Linux.
 - Do not rely on subjective guesses. For uncertain APIs, library usage, or parameter behavior, check official or reliable sources before using them.
 - Do not design fallback mechanisms. Do not secretly add degradation logic, default error swallowing, fallback branches, or implicit fault tolerance just to make the code “look more robust.”
 - Do not introduce any secondary issues, cascading issues, or hidden risks. In particular, proactively check concurrency, shared state, lock contention, resource release, cache pollution, path side effects, compatibility breakage, and related risks.

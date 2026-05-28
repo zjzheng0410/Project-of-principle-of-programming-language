@@ -1,0 +1,20 @@
+// Option 基础、match 和 match 守卫
+let x = Some(10)
+let y = None
+is_some(x) // => true
+is_none(y) // => true
+
+match x {
+    Some(v) => v + 1
+    None => 0
+} // => 11
+
+match Some(75) {
+    Some(v) if v >= 60 => 1
+    Some(v) => 0
+    None => -1
+} // => 1
+
+map_opt(Some(5), fn v => v * 3) // => Some(15)
+unwrap_or(None, 99) // => 99
+and_then(Some(8), fn v => Some(v + 4)) // => Some(12)
