@@ -56,6 +56,27 @@ static char *copy_current_text(Parser *p) {
     return ast_strdup(peek(p)->text ? peek(p)->text : "");
 }
 
+/* 独立行 // => 是语句列表层语法，只能绑定当前 block/program 的最后一条语句，不能进入表达式解析后猜测处理。 */
+static int attach_expect_to_previous(Parser *p, Block *block) {
+    Token *token = peek(p);
+    if (block->count == 0) {
+        diag_error(p->diag, token->line, token->column, "语法分析", "期望输出注释缺少关联语句");
+        advance(p);
+        return 0;
+    }
+
+    Stmt *previous = block->items[block->count - 1];
+    if (previous->expect) {
+        diag_error(p->diag, token->line, token->column, "语法分析", "一条语句不能绑定多个期望输出注释");
+        advance(p);
+        return 0;
+    }
+
+    previous->expect = copy_current_text(p);
+    advance(p);
+    return 1;
+}
+
 static int looks_like_function_decl(Parser *p) {
     if (!at(p, TOK_IDENT) || peek_n(p, 1)->kind != TOK_LPAREN) {
         return 0;
@@ -193,6 +214,14 @@ static Block *parse_block(Parser *p) {
     Block *block = block_new();
     skip_newlines(p);
     while (!at(p, TOK_RBRACE) && !at(p, TOK_EOF)) {
+        if (at(p, TOK_EXPECT)) {
+            if (!attach_expect_to_previous(p, block)) {
+                skip_newlines(p);
+                break;
+            }
+            skip_newlines(p);
+            continue;
+        }
         Stmt *stmt = parse_stmt(p);
         if (!stmt || !block_add(block, stmt)) {
             return block;
@@ -433,6 +462,13 @@ Program *parse_program(TokenVec *tokens, Diagnostic *diag) {
     program->body = block_new();
     skip_newlines(&p);
     while (!at(&p, TOK_EOF)) {
+        if (at(&p, TOK_EXPECT)) {
+            if (!attach_expect_to_previous(&p, program->body)) {
+                break;
+            }
+            skip_newlines(&p);
+            continue;
+        }
         Stmt *stmt = parse_stmt(&p);
         if (!stmt || !block_add(program->body, stmt)) {
             break;

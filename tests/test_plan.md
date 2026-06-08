@@ -13,4 +13,5 @@
 - `functional_closure.ppl`：函数赋值、匿名函数、Lambda、函数返回函数、闭包捕获和闭包独立状态。
 - `arrays.ppl`：数组字面量、空数组、索引、`len`、`map`、`filter`、`reduce`、`any`、`all`。
 - `recursion_guard.ppl`：递归函数、条件表达式、返回 Option 的局部函数和 match guard。
+- `hidden_rewrite.ppl`：改写变量名、数组内容和阈值，覆盖空数组、闭包独立状态、多层 match、match guard，以及顶层和块内独立行 `// =>`。
 - `examples/2026_feature_demo.ppl`：按 `2026.docx` 功能清单组合验证全部功能。

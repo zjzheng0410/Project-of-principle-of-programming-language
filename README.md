@@ -114,7 +114,7 @@ gcc -Iruntime -std=c11 -Wall -Wextra -pedantic -g \
 
 ## 输出规则
 
-`.ppl` 示例中的普通语句默认不打印。某条语句后带有 `// => ...` 注释时，生成程序会打印该语句的实际求值结果。
+`.ppl` 示例中的普通语句默认不打印。某条语句后带有 `// => ...` 注释时，生成程序会打印该语句的实际求值结果。`// =>` 可以写在语句同一行，也可以独立写在紧随该语句之后的一行；独立行注释绑定到前一条已解析语句。
 
 示例：
 
@@ -125,6 +125,8 @@ match x {
     Some(v) => v + 1
     None => 0
 } // => 11
+unwrap_or(None, 99)
+// => 99
 ```
 
 运行输出：
@@ -132,6 +134,7 @@ match x {
 ```text
 true
 11
+99
 ```
 
 `// =>` 后面的文本用于说明期望结果和编写 golden 文件；程序不会把该文本当作固定输出，也不会按行号或文件名做特殊匹配。
@@ -202,6 +205,7 @@ Option 组合：
 - `tests/fixtures/functional_closure.ppl`
 - `tests/fixtures/arrays.ppl`
 - `tests/fixtures/recursion_guard.ppl`
+- `tests/fixtures/hidden_rewrite.ppl`
 - `examples/2026_feature_demo.ppl`
 
 每个测试都会执行：
@@ -228,5 +232,6 @@ PASS option_chain
 PASS functional_closure
 PASS arrays
 PASS recursion_guard
+PASS hidden_rewrite
 PASS 2026_feature_demo
 ```

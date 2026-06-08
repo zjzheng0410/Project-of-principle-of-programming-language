@@ -12,6 +12,7 @@ fixtures=(
   functional_closure
   arrays
   recursion_guard
+  hidden_rewrite
 )
 
 for name in "${fixtures[@]}"; do
